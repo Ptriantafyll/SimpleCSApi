@@ -23,10 +23,10 @@ spec:
           command:
             - cat
           tty: true
-          privileged: true
+          # privileged: true
           volumeMounts:
             - name: dockersock
-              mountPath: /var/run/docker.sock    
+              mountPath: /var/run/docker.sock 
         - name: jenkins
           image: jenkins/jenkins:lts
           resources:
@@ -66,4 +66,4 @@ spec:
               claimName: jenkins-pv-claim
         - name: dockersock
           hostPath:
-          path: /var/run/docker.sock
+            path: /var/run/docker.sock
