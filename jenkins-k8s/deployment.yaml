@@ -18,6 +18,15 @@ spec:
             runAsUser: 1000
       serviceAccountName: jenkins-admin
       containers:
+        - name: docker
+          image: docker:19.03
+          command:
+            - cat
+          tty: true
+          # privileged: true
+          volumeMounts:
+            - name: dockersock
+              mountPath: /var/run/docker.sock
         - name: jenkins
           image: jenkins/jenkins:lts
           resources:
@@ -52,6 +61,9 @@ spec:
             - name: jenkins-data
               mountPath: /var/jenkins_home         
       volumes:
+        - name: dockersock
+          hostPath:
+            path: /var/run/docker.sock
         - name: jenkins-data
           persistentVolumeClaim:
               claimName: jenkins-pv-claim
