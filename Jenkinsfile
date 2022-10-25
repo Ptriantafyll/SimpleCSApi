@@ -1,9 +1,4 @@
 pipeline {
-    // environment {
-    //     registry = "prtiantafyll/simplecsapi"
-    //     registryCredential = 'ptriantafyll'
-    //     dockerImage = ''
-    // }
     agent any
     stages {
         // stage ('Build Docker Image'){
@@ -18,6 +13,8 @@ pipeline {
         // }
         stage('Docker Build') {
             steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '<snip>', url: 'https://github.com/Ptriantafyll/SimpleCSApi']]])
+
                 container('docker') {
                     sh "docker build -t ptriantafyll/simplecsapi ."
                 }
