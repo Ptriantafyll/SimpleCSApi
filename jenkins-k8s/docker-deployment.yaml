@@ -1,0 +1,29 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: docker-deployment
+#   namespace: devops-tools
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       agent: docker
+#   template:
+#     metadata:
+#       labels:
+#         agent: docker
+#     spec:
+#       containers:
+#         - name: docker
+#           image: docker:latest
+#           command:
+#             - cat
+#           tty: true
+#           # privileged: true
+#           volumeMounts:
+#             - name: dockersock
+#               mountPath: /var/run/docker.sock
+#       volumes:
+#         - name: dockersock
+#           hostPath:
+#             path: /var/run/docker.sock

@@ -3,9 +3,10 @@ pipeline {
     stages {
         stage('Docker Build') {
             steps {
-                sh "docker build -t ptriantafyll/simplecsapi ."
+                container('docker') {
+                    sh "docker build -t ptriantafyll/simplecsapi ."
+                }            
             }
         }
     }
-    
 }

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jenkins
+  name: jenkins-deployment
   namespace: devops-tools
 spec:
   replicas: 1
@@ -18,16 +18,18 @@ spec:
             runAsUser: 1000
       serviceAccountName: jenkins-admin
       containers:
-        # - name: docker
-        #   image: docker:latest
-        #   command:
-        #     - cat
-        #   tty: true
-        #   # privileged: true
-        #   volumeMounts:
-        #     - name: dockersock
-        #       mountPath: /var/run/docker.sock
-        - name: jenkins
+        - name: docker
+          image: docker:latest
+          ports:
+            - containerPort: 9999
+          command:
+            - cat
+          tty: true
+          # privileged: true
+          volumeMounts:
+            - name: dockersock
+              mountPath: /var/run/docker.sock
+        - name: jenkins-deployment
           image: jenkins/jenkins:lts
           resources:
             limits:
@@ -61,9 +63,9 @@ spec:
             - name: jenkins-data
               mountPath: /var/jenkins_home         
       volumes:
-        # - name: dockersock
-        #   hostPath:
-        #     path: /var/run/docker.sock
+        - name: dockersock
+          hostPath:
+            path: /var/run/docker.sock
         - name: jenkins-data
           persistentVolumeClaim:
               claimName: jenkins-pv-claim
