@@ -1,4 +1,7 @@
-/bin
-/obj
+/Api/bin
+/Api/obj
 .vscode
 /k8s-dashboard
+/jenkins-k8s
+/jenkins_compose
+/k8s
