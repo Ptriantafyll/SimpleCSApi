@@ -9,6 +9,6 @@ public class MyController : ControllerBase
     [HttpGet]
     public string Get()
     {
-        return "Hello, World! from kubernetes";
+        return "Hello, World! from my kubernetes";
     }
 }
