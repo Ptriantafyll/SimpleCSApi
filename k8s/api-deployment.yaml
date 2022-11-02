@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      csharp: api
+  template:
+    metadata:
+      labels:
+        csharp: api
+    spec:
+      containers:
+        - name: api
+          image: ptriantafyll/simplecsapi
+          ports:
+            - containerPort: 80
+
+# after push 
+# kubectl set image deployment/api-deployment api=ptriantafyll/simplecsapi:latest
+# change the version to update deployment image

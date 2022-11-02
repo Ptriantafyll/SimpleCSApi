@@ -1,0 +1,64 @@
+# docker-compose.yaml
+version: '3.8'
+services:
+  docker-in-docker:
+    image: docker:dind
+    container_name: jenkins-docker
+    privileged: true 
+    networks:
+      jenkins:
+        aliases:
+          - docker
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client
+      # - ./jenkins-docker-certs:/certs/client
+      # - ./jenkins-data:/var/jenkins_home
+    ports:
+      - "2376:2376"
+  jenkins:
+    build: 
+      context: .
+      dockerfile: Dockerfile.jenkins
+    container_name: jenkins-blueocean
+    restart: on-failure
+    links: 
+      - "docker-in-docker"
+    networks:
+      - jenkins
+    environment:
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+      - DOCKER_HOST=tcp://docker:2376
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - jenkins-docker-certs:/certs/client:ro
+      # - ./jenkins-data:/var/jenkins_home
+      # - ./jenkins-docker-certs:/certs/client:ro
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+  agent:
+    image: jenkins/ssh-agent:jdk11
+    privileged: true
+    user: root
+    container_name: agent
+    expose:
+      - 22
+    networks:
+      jenkins:
+        aliases:
+          - agent
+    environment:
+      - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDkAhZcJ9ZNic2aROT3kCia8ee7RwISUBoES3mEytKDzVjGRPEBZKN8TZALYzEtOM57Ls1lP5sQcUwYlxx8WvIXhiwBSb4vArxt7LMJRjILjdiPLELisoGkpJ4SX6i4A7lC58ixPkzOUn2b72AOSS7s31YM3EGeCUEbjQ4KdL/EP0FTR9J6TY/8v+Dl+X8HToUoynCvzj8VDnTgz7YIW73cyWSSnMreoiTrPZTlvlRz2B4tF3FGqzoPN04cDZhTwxJKAF2CzRI5XMFqTOHxjJN82CqcGooM9AHuPWnbwkM+5OhG5lsEgZqfGB2LQ83zMM/Xm2SZpM7I+JmuLg7y8Qz9OGjA5jQN899oIFwoThq+fHDLxQ4kNLxJz90YxbBi6M/UMwhwZZ49sCoZ+0AliKe0jM4S8+lxh9k7RSmr8s4NQF73ZwprdJ/dOvBHO6LfivYzvXMtNnvrZd7b88fef7MOS+R1ODu+3B7a/z5ZHYWwbEBK5nIbpu3shvbrpBFw8nk= citrite\panagioti2@LCY2-EWS-WPD182
+networks:
+  jenkins: {}
+volumes:
+  jenkins-data:
+    external: true
+  jenkins-docker-certs:
+    external: true
+
+# https://kubernetes.docker.internal:6443
