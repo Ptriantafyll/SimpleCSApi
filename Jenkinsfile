@@ -29,10 +29,6 @@ pipeline {
         stage('Deploy to Kubernetes cluster'){
             steps {
                 kubeconfig(credentialsId: 'kubernetes', serverUrl: 'https://kubernetes.docker.internal:6443', caCertificate: '') {
-                    // kubernetesApply file: './k8s/api-deployment.yaml', createNewResources: true, deletePodsOnReplicationControllerUpdate: false, ignoreRunningOAuthClients: false, ignoreServices: false, processTemplatesLocally: false, readinessTimeout: 0, rollingUpgradePreserveScale: true, rollingUpgrades: true, environment: '', environmentName: '', registry: 'ptriantafyll/simplecsapi', servicesOnly: false
-                    // kubernetesApply file: './k8s/api-nodeport.yaml', createNewResources: true, deletePodsOnReplicationControllerUpdate: false, ignoreRunningOAuthClients: false, ignoreServices: false, processTemplatesLocally: false, readinessTimeout: 0, rollingUpgradePreserveScale: true, rollingUpgrades: true, environment: '', environmentName: '', registry: 'ptriantafyll/simplecsapi', servicesOnly: false
-                    // kubernetesApply(file: '/k8s/api-nodeport.yaml', createNewResources: true, deletePodsOnReplicationControllerUpdate: false, ignoreRunningOAuthClients: false, ignoreServices: false, processTemplatesLocally: false, readinessTimeout: 0, rollingUpgradePreserveScale: true, rollingUpgrades: true, servicesOnly: false)
-                    // kubernetesApply(file: '/k8s/api-deployment.yaml', createNewResources: true, deletePodsOnReplicationControllerUpdate: false, ignoreRunningOAuthClients: false, ignoreServices: false, processTemplatesLocally: false, readinessTimeout: 0, rollingUpgradePreserveScale: true, rollingUpgrades: true, servicesOnly: false)
                     sh 'kubectl apply -f ./k8s/'
                 }
             }
