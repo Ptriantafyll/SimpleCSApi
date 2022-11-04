@@ -3,3 +3,5 @@
 .vscode
 /k8s-dashboard
 /jenkins-k8s
+/jenkins_compose/jenkins_agent
+/jenkins_compose/jenkins_agent.pub
