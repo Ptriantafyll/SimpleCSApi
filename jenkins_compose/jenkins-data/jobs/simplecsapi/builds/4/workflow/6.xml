@@ -1,0 +1,16 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<Tag plugin="workflow-support@839.v35e2736cfd5c">
+  <node class="cps.n.StepStartNode" plugin="workflow-cps@3520.va_8fc49e2f96f">
+    <parentIds>
+      <string>5</string>
+    </parentIds>
+    <id>6</id>
+    <descriptorId>org.jenkinsci.plugins.credentialsbinding.impl.BindingStep</descriptorId>
+  </node>
+  <actions>
+    <wf.a.BodyInvocationAction plugin="workflow-api@1200.v8005c684b_a_c6"/>
+    <wf.a.TimingAction plugin="workflow-api@1200.v8005c684b_a_c6">
+      <startTime>1667831232746</startTime>
+    </wf.a.TimingAction>
+  </actions>
+</Tag>

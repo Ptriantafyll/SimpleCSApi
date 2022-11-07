@@ -10,7 +10,7 @@ RUN echo "deb [arch=$(dpkg --print-architecture) \
 
 RUN apt-get update && apt-get install -y docker-ce-cli
 
-# install docker compose on jenkins container
+# install docker compose on jenkins container - maybe is not needed
 RUN curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)"  -o /usr/local/bin/docker-compose 
 RUN mv /usr/local/bin/docker-compose /usr/bin/docker-compose
 RUN chmod +x /usr/bin/docker-compose
