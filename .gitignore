@@ -4,3 +4,4 @@
 /k8s-dashboard
 /jenkins_compose/jenkins_agent
 /jenkins_compose/jenkins_agent.pub
+/jenkins_compose/jenkins-data
