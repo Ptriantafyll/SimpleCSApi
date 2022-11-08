@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh "docker build -t ptriantafyll/simplecsapi ."
+                sh "docker build -t ptriantafyll/simplecsapi ./Api"
             }
         }
         stage('Docker Login'){
